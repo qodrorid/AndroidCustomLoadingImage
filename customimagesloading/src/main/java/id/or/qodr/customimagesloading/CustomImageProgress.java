@@ -1,6 +1,7 @@
 package id.or.qodr.customimagesloading;
 
 import android.content.Context;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.view.animation.Animation;
@@ -15,12 +16,14 @@ import android.widget.ImageView;
 public class CustomImageProgress{
 
     private Builder builder;
-    private Context context;
-    private ImageView ivLoading;
+    private static Context context;
+    private static ImageView imageView;
+    private static int animation_layout = 0;
+    private static int repeatMode;
 
-    public CustomImageProgress(Context context, ImageView ivLoading) {
-        this.context = context;
-        this.ivLoading = ivLoading;
+    public CustomImageProgress(Context context, ImageView imageView) {
+        CustomImageProgress.context = context;
+        CustomImageProgress.imageView = imageView;
     }
 
     public CustomImageProgress(Builder builder) {
@@ -28,53 +31,67 @@ public class CustomImageProgress{
     }
 
     public void startAnimation(){
-        Animation animation = AnimationUtils.loadAnimation(context, R.anim.animation_rotate);
+        if (animation_layout==0){
+            animation_layout = R.anim.animation_clockwise;
+        }
+        Animation animation = AnimationUtils.loadAnimation(context, animation_layout);
         animation.setRepeatMode(Animation.INFINITE);
-        ivLoading.startAnimation(animation);
-        return null;
+        imageView.startAnimation(animation);
     }
 
     public void stopAnimation(){
-        ivLoading.clearAnimation();
+        imageView.clearAnimation();
     }
 
+    /**
+     * builder animation
+     */
     public static class Builder{
 
-        private static int repeatMode;
-        private Context context;
 
-        public Builder(Context context) {
-            this.context = context;
+
+
+        public Builder(Context contexts) {
+            context = contexts;
         }
 
         private Animation animation;
-        private ImageView image_view;
 
 
-        public Builder repeatMode(@NonNull int animation){
-            repeatMode =animation;
+        public Builder repeatMode(@NonNull int repeat_mode){
+            repeatMode =repeat_mode;
             return this;
         }
 
-        public Builder imageView(@NonNull ImageView imageView){
-            this.image_view =imageView;
+        public Builder imageView(@NonNull ImageView image_view){
+            imageView =image_view;
+            return this;
+        }
+
+        public Builder animation(@NonNull int layout_animation){
+            animation_layout =layout_animation;
             return this;
         }
 
         @UiThread
         public CustomImageProgress build() {
-            animation = AnimationUtils.loadAnimation(context, R.anim.animation_rotate);
+            if (animation_layout==0){
+                animation_layout = R.anim.animation_clockwise;
+            }
+
+            animation = AnimationUtils.loadAnimation(context, animation_layout);
 
             if (repeatMode!=0) {
-                animation.setRepeatMode(Builder.repeatMode);
+                animation.setRepeatMode(repeatMode);
             }else{
                 animation.setRepeatMode(Animation.INFINITE);
             }
+
             return new CustomImageProgress(this);
         }
 
         public Builder start(){
-            image_view.setAnimation(animation);
+            imageView.setAnimation(animation);
             animation.start();
             return this;
         }

@@ -10,6 +10,37 @@
     <ImageView
         android:id="@+id/ivLoadingSnow"
         android:layout_centerInParent="true"
+        android:src="@drawable/ic_sync_white_48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/ivLoadingSnow1"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_settings_white_48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/ivLoadingSnow2"
+        android:layout_margin="20dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_star_white_48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/ivLoadingSnow3"
+        android:layout_margin="20dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_ac_unit_white_48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/ivLoadingSnow4"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/ic_ac_unit_white_48dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
